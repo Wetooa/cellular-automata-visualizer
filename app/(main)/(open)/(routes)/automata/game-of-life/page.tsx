@@ -95,7 +95,7 @@ function GameOfLife() {
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               return (
-                <GOLCell cell={cell} i={i} j={j} flipCellState={flipCellState} />
+                <GOLCell key={i * n + j} cell={cell} i={i} j={j} flipCellState={flipCellState} />
               )
             })
           })}

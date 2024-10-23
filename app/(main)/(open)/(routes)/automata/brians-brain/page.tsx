@@ -97,7 +97,7 @@ function BriansBrain() {
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               return (
-                <BBCell cell={cell} i={i} j={j} flipCellState={flipCellState} />
+                <BBCell key={i * n + j} cell={cell} i={i} j={j} flipCellState={flipCellState} />
               )
             })
           })}

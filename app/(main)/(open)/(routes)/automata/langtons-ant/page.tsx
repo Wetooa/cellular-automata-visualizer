@@ -104,9 +104,8 @@ function LangtonsAnt() {
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               const isAnt = i === antPosition[0] && j === antPosition[1]
-
               return (
-                <LACell isAnt={isAnt} antDirection={antDirection} cell={cell} i={i} j={j} flipCellState={flipCellState} />
+                <LACell key={i * n + j} isAnt={isAnt} cell={cell} i={i} j={j} flipCellState={flipCellState} />
               )
             })
           })}
