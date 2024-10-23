@@ -9,10 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Label } from '@/components/ui/label';
+import { BBCellState as CellState } from '@/lib/types'
 
-export const enum CellState {
-  ALIVE, DEAD, DYING
-}
 
 const BriansBrainTT = {
   [CellState.DEAD]: [CellState.DEAD, CellState.DEAD, CellState.ALIVE, CellState.DEAD, CellState.DEAD, CellState.DEAD, CellState.DEAD, CellState.DEAD, CellState.DEAD],
