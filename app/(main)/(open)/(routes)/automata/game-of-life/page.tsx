@@ -6,6 +6,8 @@ import GOLCell from './cell';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
+import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideDivideSquare, LucideFastForward, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
+import { Label } from '@/components/ui/label';
 
 export enum CellState {
   ALIVE, DEAD
@@ -38,6 +40,10 @@ function GameOfLife() {
 
   function setRandomGrid() {
     setGrid(createRandomGOLGrid(n, prob))
+  }
+
+  function clearGrid() {
+    setGrid(createGOLGrid(n))
   }
 
   function flipCellState(i: number, j: number) {
@@ -81,11 +87,11 @@ function GameOfLife() {
   })
 
   return (
-    <div className='p-2'>
-      <h3 className="text-2xl">Game of Life</h3>
+    <div className='p-2 h-[90%]'>
+      <h3 className="text-2xl font-bold p-2">Game of Life</h3>
 
-      <div className='p-6 flex gap-2'>
-        <div className={`flex-1 aspect-square grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+      <div className='p-6 flex  h-full gap-4'>
+        <div className={`h-full aspect-square  grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               return (
@@ -95,24 +101,25 @@ function GameOfLife() {
           })}
         </div>
 
-        <div className='flex flex-col gap-2'>
-          <h5>Game Of Life Controls</h5>
+        <div className='flex flex-col gap-3 w-72 rounded-lg border p-2'>
+          <h5 className="text-lg font-bold">Game Of Life Controls</h5>
 
-          <Button variant="outline" onClick={moveToNextState}>Step To Next State</Button>
-          <Button variant="outline" onClick={setRandomGrid}>Generate Random Board</Button>
+          <Button variant="outline" onClick={moveToNextState}>Step To Next State <LucideArrowRight /> </Button>
+          <Button variant="outline" onClick={setRandomGrid}>Generate Random Board <LucideDice4 /></Button>
+          <Button variant="destructive" onClick={clearGrid}>Clear Grid <LucideTrash /></Button>
 
           <div>
-            <label htmlFor="">Grid Dimensions</label>
+            <Label className="flex items-center gap-2" htmlFor=""> <LucideGrid2x2Plus className="w-3" />  Grid Dimensions </Label>
             <Slider defaultValue={[20]} max={100} step={1} onValueChange={(e) => { setN(e[0]); setGrid(createGOLGrid(e[0])); }} />
           </div>
 
           <div>
-            <label htmlFor="">Generation Speed</label>
-            <Slider defaultValue={[200]} min={100} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor=""> <LucideClock6 className="w-3" />  Generation Speed</Label>
+            <Slider defaultValue={[200]} min={10} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
           </div>
 
           <div>
-            <label htmlFor="">Random Generation Probablity</label>
+            <Label className="flex items-center gap-2" htmlFor=""> <LucideDices className="w-3" />  Random Generation Probability </Label>
             <Slider defaultValue={[0.2]} min={0.1} max={1} step={0.1} onValueChange={(e) => { setProb(e[0]) }} />
           </div>
 
@@ -124,7 +131,14 @@ function GameOfLife() {
             />
           </div>
 
+          <div className="italic">
+            <h6 className="flex items-center"> Explanation <LucideLightbulb className="w-3" /> </h6>
+            <p className="text-xs">John Conway’s Game of Life is a cellular automaton where cells on a grid are either Alive or Dead. A cell’s next state depends on its neighbors: it survives with two or three neighbors, dies if overcrowded or isolated, and comes to life if exactly three neighbors are Alive. Despite its simplicity, Game of Life produces complex, often unpredictable patterns, showing how order and chaos can emerge from basic rules.</p>
+
+          </div>
+
         </div>
+
       </div>
 
     </div>

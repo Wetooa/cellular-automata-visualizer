@@ -3,10 +3,12 @@
 
 import React, { useEffect, useState } from 'react'
 import { isWithinBounds } from '@/lib/utils';
+import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideDivideSquare, LucideFastForward, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
 import BBCell from './cell';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
+import { Label } from '@/components/ui/label';
 
 export enum CellState {
   ALIVE, DEAD, DYING
@@ -82,12 +84,16 @@ function BriansBrain() {
     }
   })
 
-  return (
-    <div className='p-2'>
-      <h3 className="text-2xl">Brian's Brain</h3>
+  function clearGrid() {
+    setGrid(createBBGrid(n))
+  }
 
-      <div className='p-6 flex gap-2'>
-        <div className={`flex-1 aspect-square grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+  return (
+    <div className='p-2 h-[90%]'>
+      <h3 className="text-2xl font-bold p-2">Brian's Brain</h3>
+
+      <div className='p-6 flex gap-2 h-full'>
+        <div className={`h-full aspect-square grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               return (
@@ -97,25 +103,26 @@ function BriansBrain() {
           })}
         </div>
 
-        <div className='flex flex-col gap-2'>
-          <h5>Brian's Brain Controls</h5>
+        <div className='flex flex-col gap-3 w-72 rounded-lg border p-2'>
+          <h5 className="text-lg font-bold">Brian's Brain Controls</h5>
 
-          <Button variant="outline" onClick={moveToNextState}>Step To Next State</Button>
-          <Button variant="outline" onClick={setRandomGrid}>Generate Random Board</Button>
+          <Button variant="outline" onClick={moveToNextState}>Step To Next State <LucideArrowRight /> </Button>
+          <Button variant="outline" onClick={setRandomGrid}>Generate Random Board <LucideDice4 /></Button>
+          <Button variant="destructive" onClick={clearGrid}>Clear Grid <LucideTrash /></Button>
 
           <div>
-            <label htmlFor="">Grid Dimensions</label>
+            <Label className="flex items-center gap-2" htmlFor=""> <LucideGrid2x2Plus className="w-3" />  Grid Dimensions </Label>
             <Slider defaultValue={[20]} max={100} step={1} onValueChange={(e) => { setN(e[0]); setGrid(createBBGrid(e[0])); }} />
           </div>
 
           <div>
-            <label htmlFor="">Generation Speed</label>
-            <Slider defaultValue={[200]} min={50} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor=""> <LucideClock6 className="w-3" />  Generation Speed</Label>
+            <Slider defaultValue={[200]} min={10} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
           </div>
 
           <div>
-            <label htmlFor="">Random Generation Probablity</label>
-            <Slider defaultValue={[0.2]} min={0.01} max={0.5} step={0.01} onValueChange={(e) => { setProb(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor=""> <LucideDices className="w-3" />  Random Generation Probability </Label>
+            <Slider defaultValue={[0.2]} min={0.1} max={1} step={0.1} onValueChange={(e) => { setProb(e[0]) }} />
           </div>
 
           <div>
@@ -126,6 +133,10 @@ function BriansBrain() {
             />
           </div>
 
+          <div className="italic">
+            <h6 className="flex items-center"> Explanation <LucideLightbulb className="w-3" /> </h6>
+            <p className="text-xs">Brian's Brain, created by Brian Silverman, is a cellular automaton that mimics excitable systems like neurons. Each cell can be in one of three states: On, Off, or Dying. If a cell is On, it transitions to Dying, then Off, and if it's Off, it can turn On if exactly two neighbors are On. The resulting behavior is chaotic yet self-sustaining, with pulsing patterns that resemble waves of activity spreading across the grid.</p>
+          </div>
         </div>
       </div>
 

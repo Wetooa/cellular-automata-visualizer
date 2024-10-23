@@ -1,12 +1,14 @@
 
 import { buttonVariants } from "@/components/ui/button"
+import { LucideBrain } from "lucide-react"
 import Link from "next/link"
 
 export default function Navbar() {
   return (
-    <nav className='flex bg-primary-foreground p-2'>
-      <Link href="/">
-        <h1 className='font-bold text-3xl'>Cellular Automata Visualizer</h1>
+    <nav className='flex h-fit w-full bg-primary-foreground p-3 drop-shadow-md '>
+      <Link className="flex  transition-all items-center gap-2 hover:scale-105 rounded-sm p-1" href="/">
+        <LucideBrain />
+        <h1 className='font-bold text-3xl'>CA Visualizer</h1>
       </Link>
 
       <ul className='ml-auto flex gap-2 items-center'>
