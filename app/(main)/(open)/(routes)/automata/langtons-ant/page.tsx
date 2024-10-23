@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 
-export enum CellState {
+export const enum CellState {
   BLACK, WHITE
 }
 

@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch"
 import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 
-export enum CellState {
+export const enum CellState {
   ALIVE, DEAD
 }
 

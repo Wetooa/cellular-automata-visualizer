@@ -10,7 +10,7 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Label } from '@/components/ui/label';
 
-export enum CellState {
+export const enum CellState {
   ALIVE, DEAD, DYING
 }
 
