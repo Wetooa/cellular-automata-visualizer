@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import { CellState } from './page';
+import { GOLCellState as CellState } from '@/lib/types'
 
 function GOLCell(props: { cell: CellState, i: number, j: number, flipCellState: (i: number, j: number) => void }) {
   const { cell, i, j, flipCellState } = props;

@@ -7,10 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
-
-export const enum CellState {
-  BLACK, WHITE
-}
+import { LLCellState as CellState } from '@/lib/types'
 
 const LangtonsAntTT = {
   [CellState.BLACK]: -1,

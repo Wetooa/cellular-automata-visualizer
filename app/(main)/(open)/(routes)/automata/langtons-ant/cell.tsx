@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import { CellState } from './page';
+import { LLCellState as CellState } from '@/lib/types'
 
 function LACell(props: { cell: CellState, i: number, j: number, flipCellState: (i: number, j: number) => void, isAnt: boolean }) {
   const { cell, i, j, isAnt, flipCellState } = props;

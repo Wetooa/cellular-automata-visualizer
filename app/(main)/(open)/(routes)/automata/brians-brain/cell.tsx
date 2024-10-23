@@ -2,7 +2,7 @@
 
 
 import React from 'react'
-import { CellState } from './page';
+import { BBCellState as CellState } from '@/lib/types'
 
 function BBCell(props: { cell: CellState, i: number, j: number, flipCellState: (i: number, j: number) => void }) {
   const { cell, i, j, flipCellState } = props;

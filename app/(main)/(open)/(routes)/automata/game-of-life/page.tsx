@@ -8,10 +8,7 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-
-export const enum CellState {
-  ALIVE, DEAD
-}
+import { GOLCellState as CellState } from '@/lib/types'
 
 const GameOfLifeTT = {
   [CellState.DEAD]: [CellState.DEAD, CellState.DEAD, CellState.DEAD, CellState.ALIVE, CellState.DEAD, CellState.DEAD, CellState.DEAD, CellState.DEAD, CellState.DEAD],
