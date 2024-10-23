@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { isWithinBounds } from '@/lib/utils';
-import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideDivideSquare, LucideFastForward, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
+import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
 import BBCell from './cell';
 import { Button } from '@/components/ui/button';
 import { Slider } from "@/components/ui/slider"
@@ -57,9 +57,9 @@ function BriansBrain() {
 
   function countAliveNeighbors(grid: Array<Array<CellState>>, i: number, j: number) {
     let count = 0;
-    for (let [dx, dy] of orthogonalChange) {
-      let r = i + dx;
-      let c = j + dy;
+    for (const [dx, dy] of orthogonalChange) {
+      const r = i + dx;
+      const c = j + dy;
       count += Number(isWithinBounds(r, c, n) && grid[r][c] == CellState.ALIVE);
     }
     return count;

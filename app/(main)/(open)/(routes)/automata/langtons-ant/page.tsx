@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideDivideSquare, LucideFastForward, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
+import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
 import LACell from './cell';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
