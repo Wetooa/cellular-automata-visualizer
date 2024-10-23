@@ -96,7 +96,7 @@ function LangtonsAnt() {
     <div className='p-2 h-[90%]'>
       <h3 className="text-2xl font-bold p-2">Langton's Ant </h3>
 
-      <div className='p-6 flex gap-2 h-full'>
+      <div className='p-6 flex gap-4 h-full'>
         <div className={`h-full aspect-square grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
           {grid.map((row, i) => {
             return row.map((cell, j) => {

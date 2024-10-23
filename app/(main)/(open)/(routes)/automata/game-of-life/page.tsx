@@ -87,7 +87,7 @@ function GameOfLife() {
     <div className='p-2 h-[90%]'>
       <h3 className="text-2xl font-bold p-2">Game of Life</h3>
 
-      <div className='p-6 flex  h-full gap-4'>
+      <div className='p-6 flex h-full gap-4'>
         <div className={`h-full aspect-square  grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
           {grid.map((row, i) => {
             return row.map((cell, j) => {
