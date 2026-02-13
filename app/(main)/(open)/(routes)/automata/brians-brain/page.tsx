@@ -1,7 +1,7 @@
 
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { isWithinBounds } from '@/lib/utils';
 import { LucideArrowRight, LucideClock6, LucideDice4, LucideDices, LucideGrid2x2Plus, LucideLightbulb, LucideTrash } from 'lucide-react';
 import BBCell from './cell';
@@ -22,7 +22,7 @@ const orthogonalChange = [[0, 1], [1, 0], [0, -1], [-1, 0], [1, 1], [1, -1], [-1
 function BriansBrain() {
 
   const [n, setN] = useState(20);
-  const [grid, setGrid] = useState(createBBGrid(n));
+  const [grid, setGrid] = useState(() => createBBGrid(20));
 
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(200);
@@ -72,14 +72,14 @@ function BriansBrain() {
     }))
   }
 
+  const moveToNextStateRef = useRef(moveToNextState)
+  moveToNextStateRef.current = moveToNextState
+
   useEffect(() => {
-    if (isRunning) {
-      const interval = setInterval(() => {
-        moveToNextState()
-      }, speed)
-      return () => clearInterval(interval)
-    }
-  })
+    if (!isRunning) return
+    const interval = setInterval(() => moveToNextStateRef.current(), speed)
+    return () => clearInterval(interval)
+  }, [isRunning, speed])
 
   function clearGrid() {
     setGrid(createBBGrid(n))
@@ -89,8 +89,13 @@ function BriansBrain() {
     <div className='p-2 h-[90%]'>
       <h3 className="text-2xl font-bold p-2">Brian's Brain</h3>
 
-      <div className='p-6 flex gap-4 h-full'>
-        <div className={`h-full aspect-square grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+      <div className="p-6 flex flex-col lg:flex-row gap-4 h-full overflow-auto">
+        <div
+          className="h-full aspect-square grid"
+          style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}
+          role="grid"
+          aria-label="Brian's Brain grid"
+        >
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               return (
@@ -100,7 +105,7 @@ function BriansBrain() {
           })}
         </div>
 
-        <div className='flex flex-col gap-3 w-72 rounded-lg border p-2'>
+        <div className="flex flex-col gap-3 w-full lg:w-72 shrink-0 rounded-lg border p-2">
           <h5 className="text-lg font-bold">Brian's Brain Controls</h5>
 
           <Button variant="outline" onClick={moveToNextState}>Step To Next State <LucideArrowRight /> </Button>
@@ -108,26 +113,29 @@ function BriansBrain() {
           <Button variant="destructive" onClick={clearGrid}>Clear Grid <LucideTrash /></Button>
 
           <div>
-            <Label className="flex items-center gap-2" htmlFor=""> <LucideGrid2x2Plus className="w-3" />  Grid Dimensions </Label>
-            <Slider defaultValue={[20]} max={100} step={1} onValueChange={(e) => { setN(e[0]); setGrid(createBBGrid(e[0])); }} />
+            <Label className="flex items-center gap-2" htmlFor="bb-grid-size">
+              <LucideGrid2x2Plus className="w-3" aria-hidden /> Grid Dimensions
+            </Label>
+            <Slider id="bb-grid-size" defaultValue={[20]} max={100} step={1} onValueChange={(e) => { setN(e[0]); setGrid(createBBGrid(e[0])); }} />
           </div>
 
           <div>
-            <Label className="flex items-center gap-2" htmlFor=""> <LucideClock6 className="w-3" />  Generation Speed</Label>
-            <Slider defaultValue={[200]} min={10} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor="bb-speed">
+              <LucideClock6 className="w-3" aria-hidden /> Generation Speed
+            </Label>
+            <Slider id="bb-speed" defaultValue={[200]} min={10} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
           </div>
 
           <div>
-            <Label className="flex items-center gap-2" htmlFor=""> <LucideDices className="w-3" />  Random Generation Probability </Label>
-            <Slider defaultValue={[0.2]} min={0.1} max={1} step={0.1} onValueChange={(e) => { setProb(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor="bb-prob">
+              <LucideDices className="w-3" aria-hidden /> Random Generation Probability
+            </Label>
+            <Slider id="bb-prob" defaultValue={[0.2]} min={0.1} max={1} step={0.1} onValueChange={(e) => { setProb(e[0]) }} />
           </div>
 
-          <div>
-            <label className='block' htmlFor="">Run Simulation</label>
-            <Switch
-              checked={isRunning}
-              onCheckedChange={() => setIsRunning(!isRunning)}
-            />
+          <div className="flex items-center gap-2">
+            <Label htmlFor="bb-run" className="flex items-center gap-2">Run Simulation</Label>
+            <Switch id="bb-run" checked={isRunning} onCheckedChange={() => setIsRunning(!isRunning)} />
           </div>
 
           <div className="italic">

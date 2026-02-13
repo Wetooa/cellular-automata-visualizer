@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cellular Automata Visualizer
+
+Interactive visualizations of cellular automata—discrete models that evolve over time based on simple, localized rules. Explore emergent behavior from Game of Life, Langton's Ant, and Brian's Brain.
+
+## Features
+
+- **Game of Life** – Conway's classic cellular automaton with alive/dead cells
+- **Langton's Ant** – Turing machine with black/white cells and a moving ant
+- **Brian's Brain** – Three-state automaton (on, off, dying) inspired by neural activity
+
+Each simulation includes:
+- Interactive grid (click cells to toggle)
+- Step-by-step or continuous run modes
+- Adjustable grid size and simulation speed
+- Random board generation with configurable probability
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) 18 or later
+- npm, yarn, pnpm, or bun
 
 ## Getting Started
 
-First, run the development server:
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Run development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+### Lint
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── app/
+│   ├── layout.tsx           # Root layout, fonts, metadata
+│   ├── globals.css          # Global styles, CSS variables
+│   └── (main)/(open)/(routes)/
+│       ├── page.tsx         # Home page
+│       └── automata/
+│           ├── game-of-life/
+│           ├── langtons-ant/
+│           └── brians-brain/
+├── components/
+│   ├── navbar/              # Main navigation
+│   └── ui/                  # shadcn/ui components
+├── lib/
+│   ├── types.ts             # Cell state enums
+│   └── utils.ts             # Shared utilities
+└── hooks/                   # Custom React hooks
+```
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Next.js 14](https://nextjs.org/) (App Router)
+- [React 18](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/) (Radix UI primitives)
+- [Lucide React](https://lucide.dev/) (icons)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+### Vercel (recommended)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Wetooa/cellular-automata-visualizer)
+
+### Docker
+
+```dockerfile
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+### Static export
+
+For static hosting (e.g. S3, GitHub Pages), add to `next.config.mjs`:
+
+```js
+const nextConfig = {
+  output: 'export',
+  // ...
+};
+```
+
+Then run `npm run build`; output goes to the `out/` directory.
+
+## License
+
+MIT – see [LICENSE](LICENSE) for details.

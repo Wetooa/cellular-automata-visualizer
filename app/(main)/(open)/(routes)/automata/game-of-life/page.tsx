@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { isWithinBounds } from '@/lib/utils';
 import GOLCell from './cell';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,7 @@ const orthogonalChange = [[0, 1], [1, 0], [0, -1], [-1, 0], [1, 1], [1, -1], [-1
 function GameOfLife() {
 
   const [n, setN] = useState(20);
-  const [grid, setGrid] = useState(createGOLGrid(n));
+  const [grid, setGrid] = useState(() => createGOLGrid(20));
 
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(200);
@@ -74,21 +74,26 @@ function GameOfLife() {
     }))
   }
 
+  const moveToNextStateRef = useRef(moveToNextState)
+  moveToNextStateRef.current = moveToNextState
+
   useEffect(() => {
-    if (isRunning) {
-      const interval = setInterval(() => {
-        moveToNextState()
-      }, speed)
-      return () => clearInterval(interval)
-    }
-  })
+    if (!isRunning) return
+    const interval = setInterval(() => moveToNextStateRef.current(), speed)
+    return () => clearInterval(interval)
+  }, [isRunning, speed])
 
   return (
     <div className='p-2 h-[90%]'>
       <h3 className="text-2xl font-bold p-2">Game of Life</h3>
 
-      <div className='p-6 flex h-full gap-4'>
-        <div className={`h-full aspect-square  grid`} style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+      <div className="p-6 flex flex-col lg:flex-row h-full gap-4 overflow-auto">
+        <div
+          className="h-full aspect-square grid"
+          style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}
+          role="grid"
+          aria-label="Game of Life grid"
+        >
           {grid.map((row, i) => {
             return row.map((cell, j) => {
               return (
@@ -98,7 +103,7 @@ function GameOfLife() {
           })}
         </div>
 
-        <div className='flex flex-col gap-3 w-72 rounded-lg border p-2'>
+        <div className="flex flex-col gap-3 w-full lg:w-72 shrink-0 rounded-lg border p-2">
           <h5 className="text-lg font-bold">Game Of Life Controls</h5>
 
           <Button variant="outline" onClick={moveToNextState}>Step To Next State <LucideArrowRight /> </Button>
@@ -106,23 +111,30 @@ function GameOfLife() {
           <Button variant="destructive" onClick={clearGrid}>Clear Grid <LucideTrash /></Button>
 
           <div>
-            <Label className="flex items-center gap-2" htmlFor=""> <LucideGrid2x2Plus className="w-3" />  Grid Dimensions </Label>
-            <Slider defaultValue={[20]} max={100} step={1} onValueChange={(e) => { setN(e[0]); setGrid(createGOLGrid(e[0])); }} />
+            <Label className="flex items-center gap-2" htmlFor="gol-grid-size">
+              <LucideGrid2x2Plus className="w-3" aria-hidden /> Grid Dimensions
+            </Label>
+            <Slider id="gol-grid-size" defaultValue={[20]} max={100} step={1} onValueChange={(e) => { setN(e[0]); setGrid(createGOLGrid(e[0])); }} />
           </div>
 
           <div>
-            <Label className="flex items-center gap-2" htmlFor=""> <LucideClock6 className="w-3" />  Generation Speed</Label>
-            <Slider defaultValue={[200]} min={10} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor="gol-speed">
+              <LucideClock6 className="w-3" aria-hidden /> Generation Speed
+            </Label>
+            <Slider id="gol-speed" defaultValue={[200]} min={10} max={1000} step={1} onValueChange={(e) => { setSpeed(e[0]) }} />
           </div>
 
           <div>
-            <Label className="flex items-center gap-2" htmlFor=""> <LucideDices className="w-3" />  Random Generation Probability </Label>
-            <Slider defaultValue={[0.2]} min={0.1} max={1} step={0.1} onValueChange={(e) => { setProb(e[0]) }} />
+            <Label className="flex items-center gap-2" htmlFor="gol-prob">
+              <LucideDices className="w-3" aria-hidden /> Random Generation Probability
+            </Label>
+            <Slider id="gol-prob" defaultValue={[0.2]} min={0.1} max={1} step={0.1} onValueChange={(e) => { setProb(e[0]) }} />
           </div>
 
-          <div>
-            <label className='block' htmlFor="">Run Simulation</label>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="gol-run" className="flex items-center gap-2">Run Simulation</Label>
             <Switch
+              id="gol-run"
               checked={isRunning}
               onCheckedChange={() => setIsRunning(!isRunning)}
             />

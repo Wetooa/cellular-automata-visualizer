@@ -16,7 +16,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Cellular Automata Visualizer",
-  description: "A CS313 Deliverable Project",
+  description: "Interactive visualizations of Conway's Game of Life, Langton's Ant, and Brian's Brain. Explore emergent behavior from simple rules.",
 };
 
 export default function RootLayout({
