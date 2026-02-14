@@ -10,22 +10,25 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, hsl(220 13% 90%) 0%, hsl(220 12% 88%) 50%, hsl(220 15% 86%) 100%);
+  }
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 220 13% 92%;
+    --foreground: 220 10% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 220 10% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 220 12% 88%;
+    --muted-foreground: 220 10% 40%;
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
@@ -39,6 +42,9 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --accent-teal: 173 58% 45%;
+    --accent-violet: 263 70% 58%;
+    --accent-amber: 43 74% 55%;
   }
   .dark {
     --background: 0 0% 3.9%;

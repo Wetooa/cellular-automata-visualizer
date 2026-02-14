@@ -102,12 +102,12 @@ function LangtonsAnt() {
   }, [isRunning, speed])
 
   return (
-    <div className='p-2 h-[90%]'>
-      <h3 className="text-2xl font-bold p-2">Langton's Ant </h3>
+    <div className='p-2 h-[90%] bg-background'>
+      <h3 className="text-2xl font-bold p-2 text-accent-amber">Langton's Ant</h3>
 
       <div className="p-6 flex flex-col lg:flex-row gap-4 h-full overflow-auto">
         <div
-          className="h-full aspect-square grid"
+          className="h-full aspect-square grid rounded-xl border border-border bg-card p-2 shadow-sm"
           style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}
           role="grid"
           aria-label="Langton's Ant grid"
@@ -122,8 +122,8 @@ function LangtonsAnt() {
           })}
         </div>
 
-        <div className="flex flex-col gap-3 w-full lg:w-72 shrink-0 rounded-lg border p-2">
-          <h5 className="text-lg font-bold">Langton's Ant Controls</h5>
+        <div className="flex flex-col gap-3 w-full lg:w-72 shrink-0 rounded-xl border-l-4 border-l-accent-amber border bg-card p-5 shadow-sm">
+          <h5 className="text-lg font-bold text-accent-amber">Langton's Ant Controls</h5>
 
           <Button variant="outline" onClick={moveToNextState}>Step To Next State <LucideArrowRight /> </Button>
           <Button variant="outline" onClick={setRandomGrid}>Generate Random Board <LucideDice4 /></Button>
