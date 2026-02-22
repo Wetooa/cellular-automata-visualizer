@@ -1,5 +1,5 @@
 services:
   app:
     build: .
-    ports:
-      - "8300:3000"
+    expose:
+      - "3000"
